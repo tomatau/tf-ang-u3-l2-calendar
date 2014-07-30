@@ -1,0 +1,12 @@
+{
+  "name": "calendar",
+  "private": true,
+  "dependencies": {
+    "bootstrap-sass-official": "~3.1.1",
+    "jquery": "~1.11.0",
+    "angular": "~1.2.21",
+    "angular-mocks": "~1.2.21",
+    "valentine": "~2.1.0"
+  },
+  "devDependencies": {}
+}
