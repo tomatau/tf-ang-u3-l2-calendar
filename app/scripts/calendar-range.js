@@ -1,4 +1,4 @@
-angular.module('calendar')
+angular.module('Calendar')
 	.factory('calendarRange', function(){
 		'use strict';
 		var DAY = 24 * 60 * 60 * 1000;
@@ -27,10 +27,12 @@ angular.module('calendar')
 					;
 
 				startDay.setDate(1);
-
 				firstDay = new Date(startDay);
+
 				if ( firstDay.getDay() > 0 ) { //Not Sunday
-					firstDay.setTime(firstDay.getTime() - (firstDay.getDay() * DAY));
+					firstDay.setTime(
+						firstDay.getTime() - (firstDay.getDay() * DAY)
+					);
 				}
 
 				endDay = new Date(startDay);

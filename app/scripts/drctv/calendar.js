@@ -1,9 +1,9 @@
-angular.module('calendar')
+angular.module('Calendar')
     .constant('CAL_DIR', './scripts/drctv/')
     .directive('calendarDisplay', function(CAL_DIR, CurrentRange){
         'use strict';
         var currentDateOb = CurrentRange.currentDateOb,
-            DAYS = [
+            currentDate = CurrentRange.get(), DAYS = [
                 'Sunday',
                 'Monday',
                 'Tuesday',
@@ -14,54 +14,44 @@ angular.module('calendar')
             ];
 
         // function getDay(num) { return DAYS[num]; }
-        function getShortDay(date) { return date.toDateString().split(" ")[0]; }
-        function makeRows(days){
-            var rows = [],
-                week = [],
-                day;
-            for( var i = 0; i < days.length; i++ ) {
-                day = days[i];
+        function getShortDay(dateOb) { return dateOb.toDateString().split(" ")[0]; }
+        function makeRows(daysArray){ // don't like this
+            var rows = [], week = [], i = 0, day;
+            for( ; i < daysArray.length; i++ ) {
+                day = daysArray[i];
                 week.push({
                     dayName: day.day,
                     day: day.date.getDay(),
                     weekday: getShortDay(day.date),
                     isCurrentMonth: currentDateOb.getMonth() == day.date.getMonth()
                 });
-                if (  (i+1) % DAYS.length === 0 ) {
+                if ( (i+1) % DAYS.length === 0 ) {
                     rows.push(week);
                     week = [];
                 }
             }
             return rows;
         }
-
         return {
             restrict: 'E',
             templateUrl: CAL_DIR + 'cal.tmpl.html',
             controller: function($scope){
-                var currentDate = CurrentRange.get();
-                $scope.$watch(
-                    function() { return currentDate; } ,
-                    function(newValue, oldVal){
-                        if ( newValue === oldVal ) return false;
-                        currentDateOb = CurrentRange.currentDateOb
+                $scope.$watch( function() { return currentDate; } , // don't like this
+                    function updateWeeks(newValue, oldVal){
+                        if ( newValue === oldVal ) return false; // don't like this
+                        currentDateOb = CurrentRange.currentDateOb;  // don't like this
                         $scope.weeks = makeRows(newValue['days']);
-                    },
-                    true
-                )
+                    }, true )
                 $scope.weeks = makeRows(currentDate['days']);
             }
         }
     })
 
-
-
-
-
     .directive('calendarControl', function(CAL_DIR, CurrentRange, calendarRange){
         'use strict';
-        // 20 years each way on select
-        var MNTHS = [
+        var currentMonth = CurrentRange.currentDateOb.getMonth(),
+            currentYear = CurrentRange.currentDateOb.getFullYear(),
+            defaultRange = 20, MNTHS = [
                 "January",
                 "February",
                 "March",
@@ -74,19 +64,12 @@ angular.module('calendar')
                 "October",
                 "November",
                 "December"
-            ],
-            currentMonth = CurrentRange.currentDateOb.getMonth(),
-            currentYear = CurrentRange.currentDateOb.getFullYear(),
-            range = 20;
+            ];
 
-        function makeYears(){
-            var startYear = currentYear - range,
-                i = 0,
-                l = range * 2,
-                years = [];
-            for (; i <= l; i++) {
-                years.push(startYear + i);
-            };
+        function makeYears(range){
+            var startYear = currentYear - (range || defaultRange),
+                i = 0, l = (range || defaultRange) * 2, years = [];
+            for (; i <= l; i++) { years.push(startYear + i); };
             return years;
         }
         function setDate(){
@@ -96,17 +79,17 @@ angular.module('calendar')
         return {
             restrict: 'E',
             templateUrl: CAL_DIR + 'control.tmpl.html',
-            controller: function($scope, $element){
+            controller: function($scope){
                 $scope.updateMonth = function(month){
-                    $scope.currentMonth = currentMonth = month;
+                    $scope.currentMonth = currentMonth = month; // don't like this
                     setDate();
                 }
                 $scope.updateYear = function(year){
-                    $scope.currentYear = currentYear = year;
+                    $scope.currentYear = currentYear = year; // don't like this
                     setDate();
                 }
-                $scope.currentYear = currentYear;
-                $scope.currentMonth = currentMonth;
+                $scope.currentMonth = currentMonth; // don't like this
+                $scope.currentYear = currentYear; // don't like this
                 $scope.months = MNTHS;
                 $scope.years = makeYears();
             }
