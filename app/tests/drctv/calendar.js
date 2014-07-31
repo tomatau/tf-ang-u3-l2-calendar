@@ -55,6 +55,10 @@ describe('Calendar Display', function () {
         });
     });
 
+    // it should update according to the CurrentRange business object object
+    // 
+    // it should display the days available from the current range within the weeks
+
     function compileDirective(){
         compiledElem = _$compile( directiveElem.get(0) )(currentScope);
         currentScope.$digest();

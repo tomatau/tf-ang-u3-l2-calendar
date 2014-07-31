@@ -54,10 +54,11 @@ describe('Calendar Display', function () {
         });
 
         it('should have a function to update the month', function () {
-            ctrl.updateMonth(1); // jan
+            ctrl.updateMonth(1); // feb
             CrRng.currentDateOb.getMonth().should.eql(1);
             ctrl.updateMonth(11); // december
             CrRng.currentDateOb.getMonth().should.eql(11);
+            // make sure all updates happened
             ctrl.currentMonth.should.eql(11);
         });
 
@@ -68,6 +69,7 @@ describe('Calendar Display', function () {
             CrRng.currentDateOb.getFullYear().should.eql(2102);
             ctrl.updateYear(1999);
             CrRng.currentDateOb.getFullYear().should.eql(1999);
+            // make sure all updates happened
             ctrl.currentYear.should.eql(1999);
         });
     });
