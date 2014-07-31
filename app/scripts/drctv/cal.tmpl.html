@@ -1,20 +1,29 @@
+<div ng-repeat="d in headers" class="header">{{d}}</div>
 <div ng-repeat="week in weeks">
-    <div class="day" ng-repeat="d in week" ng-class="{currentMonth: d.isCurrentMonth}">
-        {{ d.weekday }}&nbsp; {{ d.dayName }}
+    <div class="day btn btn-primary" 
+        ng-repeat="d in week"
+        ng-class="{currentMonth: d.isCurrentMonth}">
+        {{ d.weekday }}&nbsp; {{ d.dayNum }}
     </div>
 </div>
 
 <style>
+    .header,
     .day {
         width: 100px;
-        height: 100px;
-        border: 1px solid #828382;
         margin: 1px;
+        padding: 5px;
         display: inline-block;
-        background-color: #BBC;
-        padding: 3px;
+    }
+    .day {
+        height: 100px;
+        color: white;
     }
     .day.currentMonth {
-        background-color: #fffefA;
+        background-color: white;
+        color: #357ebd;
+    }
+    .day.currentMonth:hover {
+        background-color: #69abea;
     }
 </style>

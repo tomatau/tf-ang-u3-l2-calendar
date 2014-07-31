@@ -1,7 +1,9 @@
 {
   "name": "calendar",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "chai-datetime": "^1.2.0"
+  },
   "devDependencies": {
     "chai": "^1.9.1",
     "connect": "^2.14.4",
@@ -29,6 +31,7 @@
     "jshint-stylish": "^0.2.0",
     "karma": "^0.12.19",
     "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.1.4",
     "karma-jasmine": "^0.1.5",
     "karma-ng-html2js-preprocessor": "^0.1.0",
     "opn": "^0.1.1",

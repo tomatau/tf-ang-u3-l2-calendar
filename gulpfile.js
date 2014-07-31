@@ -64,13 +64,15 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('extras', function () {
-    return gulp.src(['app/*.*', '!app/*.html'], { dot: true })
+    return gulp.src(['app/*.*', 'app/**/*.html', '!app/*.html'], { dot: true })
         .pipe(gulp.dest('dist'));
 });
 
 gulp.task('clean', function () {
     return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
 });
+
+// ADD TMPL FILES TO COPY
 
 gulp.task('build', ['html', 'images', 'fonts', 'extras']);
 

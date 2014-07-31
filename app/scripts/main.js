@@ -1,5 +1,5 @@
-angular.module('Calendar', []);
 angular.module('Models', []);
+angular.module('Calendar', ['Models']);
 
 angular.module('myApp', [ 'Calendar', 'Models' ])
     .run(function (calendarRange, CurrentRange) {
