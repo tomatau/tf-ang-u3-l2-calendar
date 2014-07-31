@@ -8,10 +8,12 @@ angular.module('myApp', [ 'calendar', 'Models' ])
     //  calendar
     //      month/year/pick
     //      displayCalendar
-    .run(function (calendarRange, CurrentDate) {
+    .run(function (calendarRange, CurrentRange) {
+        var today = new Date();
         // console.dir(calendarRange.getMonthlyRange(new Date()).days);
-        CurrentDate.set(
-            calendarRange.getMonthlyRange(new Date())
+        CurrentRange.set(
+            today, calendarRange.getMonthlyRange(today)
         )
-        console.log(CurrentDate.get())
+        // console.log(CurrentRange.get())
+        // debugger;
     })

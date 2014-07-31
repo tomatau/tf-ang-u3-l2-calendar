@@ -1,19 +1,21 @@
 angular.module('Models')
-    .factory('CurrentDate', function(){
+    .factory('CurrentRange', function(){
         'use strict';
-        var currentDate = {}
+        var currentRange = {};
 
         return {
-            set: function(data){
-                angular.extend(this.reset(), data)
+            currentDateOb: null,
+            set: function(day, range){
+                this.currentDateOb = day;
+                angular.extend(this.reset(), range)
             },
             get: function(){
-                return currentDate;
+                return currentRange;
             },
             reset: function(){
-                for (var member in currentDate)
-                    delete currentDate[member];
-                return currentDate;
+                for (var member in currentRange)
+                    delete currentRange[member];
+                return currentRange;
             }
         };
     });
