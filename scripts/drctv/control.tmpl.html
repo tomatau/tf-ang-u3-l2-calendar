@@ -1,0 +1,26 @@
+<div class="btn-toolbar">
+    <div class="btn-group">
+        <button class="btn btn-default" disabled>{{currentYear}}</button>
+        <button class="btn btn-default dropdown-toggle" 
+                data-toggle="dropdown">
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li ng-repeat="y in years" ng-click="updateYear(y)">
+                <a href="#" data-month="{{$index}}">{{y}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="btn-group">
+        <button class="btn btn-default" disabled>{{months[currentMonth]}}</button>
+        <button class="btn btn-default dropdown-toggle" 
+                data-toggle="dropdown">
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li ng-repeat="m in months" ng-click="updateMonth($index)">
+                <a href="#" data-month="{{$index}}">{{m}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
