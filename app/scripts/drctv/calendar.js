@@ -62,54 +62,53 @@ angular.module('calendar')
         'use strict';
         // 20 years each way on select
         var MNTHS = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December"
-        ];
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December"
+            ],
+            currentMonth = CurrentRange.currentDateOb.getMonth(),
+            currentYear = CurrentRange.currentDateOb.getFullYear(),
+            range = 20;
 
-        var range = 20;
-        var month = 0;
-
+        function makeYears(){
+            var startYear = currentYear - range,
+                i = 0,
+                l = range * 2,
+                years = [];
+            for (; i <= l; i++) {
+                years.push(startYear + i);
+            };
+            return years;
+        }
+        function setDate(){
+            var newDate = new Date(currentYear, currentMonth);
+            CurrentRange.set( newDate, calendarRange.getMonthlyRange(newDate) );
+        }
         return {
             restrict: 'E',
             templateUrl: CAL_DIR + 'control.tmpl.html',
-            link: function(scope, elem){
-            },
             controller: function($scope, $element){
-                $element.find('.dropdown-menu a').on('click', function(){
-                    var newDate = new Date(1, month++);
-                    $scope.$apply(function(){
-                        CurrentRange.set(
-                            newDate, calendarRange.getMonthlyRange(newDate)
-                        );
-                    });
-                });
-                $scope.currentYear = CurrentRange.currentDateOb.getFullYear();
+                $scope.updateMonth = function(month){
+                    $scope.currentMonth = currentMonth = month;
+                    setDate();
+                }
+                $scope.updateYear = function(year){
+                    $scope.currentYear = currentYear = year;
+                    setDate();
+                }
+                $scope.currentYear = currentYear;
+                $scope.currentMonth = currentMonth;
                 $scope.months = MNTHS;
-                // new function for this
-                $scope.years = (function(){
-                    var y = $scope.currentYear - range,
-                        i = 0,
-                        l = range * 2,
-                        years = [];
-                    for (; i <= l; i++) {
-                        years.push(y + i);
-                    };
-                    return years;
-                }());
-                // make the range of years
-
-                // current month arr[0]
-                // currentMonth == day.month
+                $scope.years = makeYears();
             }
         }
     });
