@@ -1,8 +1,7 @@
 angular.module('Calendar')
-    .directive('calendarControl', function(CAL_DIR, CurrentRange, calendarRange){
+    .directive('calendarControl', function(CAL_DIR, CurrentRange){
         'use strict';
-        var currentMonth = CurrentRange.currentDateOb.getMonth(),
-            currentYear = CurrentRange.currentDateOb.getFullYear(),
+        var current = CurrentRange.getMonth(),
             defaultRange = 20, MNTHS = [
                 "January",
                 "February",
@@ -18,31 +17,26 @@ angular.module('Calendar')
                 "December"
             ];
         function makeYears(range){
-            var startYear = currentYear - (range || defaultRange),
+            var startYear = current.year - (range || defaultRange),
                 i = 0, l = (range || defaultRange) * 2, years = [];
             for (; i <= l; i++) { years.push(startYear + i); };
             return years;
         }
         function setDate(){
-            var newDate = new Date(currentYear, currentMonth);
-            CurrentRange.set( newDate, calendarRange.getMonthlyRange(newDate) );
+            CurrentRange.set( new Date(current.year, current.month) );
         }
         return {
             restrict: 'E',
             templateUrl: CAL_DIR + 'control.tmpl.html',
             controller: function($scope){
-                $scope.updateMonth = function(month){
-                    $scope.currentMonth = currentMonth = month; // don't like this
-                    setDate();
-                }
-                $scope.updateYear = function(year){
-                    $scope.currentYear = currentYear = year; // don't like this
-                    setDate();
-                }
-                $scope.currentMonth = currentMonth;
-                $scope.currentYear = currentYear;
+                $scope.current = current;
                 $scope.months = MNTHS;
                 $scope.years = makeYears();
+                $scope.$watch( 'current',
+                    function( newValue, oldValue ){
+                        if ( newValue == oldValue ) return;
+                        current = newValue; setDate();
+                    }, true )
             }
         }
     });

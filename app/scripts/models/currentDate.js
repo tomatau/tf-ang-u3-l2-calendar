@@ -1,13 +1,21 @@
 angular.module('Models')
-    .factory('CurrentRange', function(){
+    .factory('CurrentRange', function( calendarRange ){
         'use strict';
-        var currentRange = {};
+        var currentRange = {},
+            currentDateOb;
 
         return {
-            currentDateOb: null,
-            set: function(day, range){
-                this.currentDateOb = day;
-                angular.extend(this.reset(), range)
+            getMonth: function(){
+                // not sure about this...
+                if ( currentDateOb == null ) throw new Error('Cannot get month when no date')
+                return {
+                    year: currentDateOb.getFullYear(),
+                    month: currentDateOb.getMonth(),
+                }
+            },
+            set: function(day){
+                currentDateOb = day;
+                angular.extend(this.reset(), calendarRange.getMonthlyRange(day))
             },
             get: function(){
                 return currentRange;
