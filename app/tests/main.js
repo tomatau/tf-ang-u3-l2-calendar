@@ -9,7 +9,11 @@ describe('MyApp Run', function () {
 
             CurrentRange.get()['first'].should.equalDate(currentRange['first']);
             CurrentRange.get()['last'].should.equalDate(currentRange['last']);
-            CurrentRange.currentDateOb.should.equalDate(today);
+            
+            CurrentRange.getMonth().should.eql({
+                year: today.getFullYear(),
+                month: today.getMonth(),
+            });
         }
     ));
 });

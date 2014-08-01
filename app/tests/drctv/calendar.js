@@ -10,15 +10,12 @@ describe('Calendar Display', function () {
 
     var CrRng,
         clRng,
-        today,
-        RANGE = 20;
+        today;
 
     beforeEach(inject(
         function($rootScope, $compile, CurrentRange, calendarRange) {
             today = new Date();
-            CurrentRange.set(
-                today, calendarRange.getMonthlyRange(today)
-            )
+            CurrentRange.set( today )
             _$compile = $compile;
             currentScope = $rootScope.$new();
             directiveElem = angular.element('<calendar-display>');
@@ -28,15 +25,13 @@ describe('Calendar Display', function () {
     ));
     
     describe('Scope', function () {
-        var ctrl
-            ;
+        var ctrl;
 
         beforeEach(function () {
-            today = new Date();
-            // expectedYears = makeExpectedYears(today);
             compileDirective();
             ctrl = compiledElem.data('$scope');
         });
+        
         // should display correct number of weeks of 7
         it('should add correct number of weeks to scope', function () {
             var crntDateRange = CrRng.get(),
@@ -46,10 +41,10 @@ describe('Calendar Display', function () {
         
         // cells of previous month should have a class accordinly to visually displat it
         it('should give each day an isCurrentMonth property for styling', function () {
-            var currentMonth = today.getMonth();
-            angular.forEach(ctrl.weeks, function(week){
+            var current = CrRng.getMonth();
+            angular.forEach( ctrl.weeks, function(week) {
                 angular.forEach(week, function(day){
-                    day.isCurrentMonth.should.eql(day.month == currentMonth)
+                    day.isCurrentMonth.should.eql( day.month == current.month )
                 });
             })
         });

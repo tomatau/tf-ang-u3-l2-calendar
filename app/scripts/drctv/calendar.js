@@ -20,6 +20,7 @@ angular.module('Calendar')
                 month = day.date.getMonth();
                 week.push({
                     isCurrentMonth: ( current.month == month ),
+                    month: month, // used in testing
                     weekday: getShortDay(day.date),
                     dayNum: day.day
                 });

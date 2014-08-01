@@ -2,7 +2,8 @@ angular.module('Calendar')
     .directive('calendarControl', function(CAL_DIR, CurrentRange){
         'use strict';
         var current = CurrentRange.getMonth(),
-            defaultRange = 20, MNTHS = [
+            defaultRange = 20,
+            MNTHS = [
                 "January",
                 "February",
                 "March",

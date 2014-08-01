@@ -17,9 +17,7 @@ describe('Calendar Display', function () {
     beforeEach(inject(
         function($rootScope, $compile, CurrentRange, calendarRange) {
             today = new Date();
-            CurrentRange.set(
-                today, calendarRange.getMonthlyRange(today)
-            )
+            CurrentRange.set( today );
             _$compile = $compile;
             currentScope = $rootScope.$new();
             directiveElem = angular.element('<calendar-control>');
@@ -49,28 +47,36 @@ describe('Calendar Display', function () {
         });
 
         it('should set the date to the CurrentRange', function () {
-            ctrl.currentYear.should.eql(today.getFullYear());
-            ctrl.currentMonth.should.eql(today.getMonth());
+            ctrl.current.year.should.eql(today.getFullYear());
+            ctrl.current.month.should.eql(today.getMonth());
         });
 
         it('should have a function to update the month', function () {
-            ctrl.updateMonth(1); // feb
-            CrRng.currentDateOb.getMonth().should.eql(1);
-            ctrl.updateMonth(11); // december
-            CrRng.currentDateOb.getMonth().should.eql(11);
+            ctrl.current.month = 1; // feb
+            ctrl.$digest();
+            CrRng.getMonth().month.should.eql(1);
+
+            ctrl.current.month = 11; // december
+            ctrl.$digest();
+            CrRng.getMonth().month.should.eql(11);
             // make sure all updates happened
-            ctrl.currentMonth.should.eql(11);
+            ctrl.current.month.should.eql(11);
         });
 
         it('should have a function to update the year', function () {
-            ctrl.updateYear(2000);
-            CrRng.currentDateOb.getFullYear().should.eql(2000);
-            ctrl.updateYear(2102);
-            CrRng.currentDateOb.getFullYear().should.eql(2102);
-            ctrl.updateYear(1999);
-            CrRng.currentDateOb.getFullYear().should.eql(1999);
+            ctrl.current.year = 2000;
+            ctrl.$digest();
+            CrRng.getMonth().year.should.eql(2000);
+
+            ctrl.current.year = 2102;
+            ctrl.$digest();
+            CrRng.getMonth().year.should.eql(2102);
+            
+            ctrl.current.year = 1999;
+            ctrl.$digest();
+            CrRng.getMonth().year.should.eql(1999);
             // make sure all updates happened
-            ctrl.currentYear.should.eql(1999);
+            ctrl.current.year.should.eql(1999);
         });
     });
 

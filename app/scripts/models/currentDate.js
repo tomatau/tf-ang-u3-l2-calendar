@@ -6,8 +6,8 @@ angular.module('Models')
 
         return {
             getMonth: function(){
-                // not sure about this...
-                if ( currentDateOb == null ) throw new Error('Cannot get month when no date')
+                if ( currentDateOb == null )
+                    throw new Error('Cannot get month when no date')
                 return {
                     year: currentDateOb.getFullYear(),
                     month: currentDateOb.getMonth(),
