@@ -6,8 +6,9 @@ describe('Calendar Display', function () {
         compiledElem;
     
     beforeEach(module('Calendar'));
-
     beforeEach(module('tmpls'));
+
+    // WE NEED TO STUB THE MODEL AND TEST AGAINST IT'S METHODS
 
     var CrRng,
         clRng,
@@ -51,7 +52,7 @@ describe('Calendar Display', function () {
             ctrl.current.month.should.eql(today.getMonth());
         });
 
-        it('should have a function to update the month', function () {
+        it('should update the CrRng object', function () {
             ctrl.current.month = 1; // feb
             ctrl.$digest();
             CrRng.getMonth().month.should.eql(1);
@@ -71,7 +72,7 @@ describe('Calendar Display', function () {
             ctrl.current.year = 2102;
             ctrl.$digest();
             CrRng.getMonth().year.should.eql(2102);
-            
+
             ctrl.current.year = 1999;
             ctrl.$digest();
             CrRng.getMonth().year.should.eql(1999);

@@ -8,6 +8,8 @@ describe('Calendar Display', function () {
     beforeEach(module('Calendar'));
     beforeEach(module('tmpls'));
 
+    // WE NEED TO STUB THE MODEL AND TEST AGAINST IT'S METHODS
+
     var CrRng,
         clRng,
         today;
@@ -37,22 +39,37 @@ describe('Calendar Display', function () {
             var crntDateRange = CrRng.get(),
                 numWeeks = crntDateRange.days.length / 7;
             ctrl.weeks.should.have.length(numWeeks);
+            angular.forEach( ctrl.weeks, function(week){
+                week.should.have.length(7);
+            })
         });
         
         // cells of previous month should have a class accordinly to visually displat it
         it('should give each day an isCurrentMonth property for styling', function () {
             var current = CrRng.getMonth();
-            angular.forEach( ctrl.weeks, function(week) {
-                angular.forEach(week, function(day){
+            angular.forEach( ctrl.weeks, function(week){
+                angular.forEach( week, function(day){
                     day.isCurrentMonth.should.eql( day.month == current.month )
                 });
             })
         });
+
+        describe('Bindings', function () {
+            // it should update according to the CurrentRange business object object
+            iit('should update the weeks according to the CurrentRange', function () {
+                currentScope.$apply(function(){
+                    CrRng.set(new Date("01/12/2011")) // 6 week month
+                });
+                ctrl.weeks.should.have.length(6);
+
+                currentScope.$apply(function(){
+                    CrRng.set(new Date("03/01/2004")) // 5 week month
+                });
+                ctrl.weeks.should.have.length(5);
+            });
+        });
     });
 
-    // it should update according to the CurrentRange business object object
-    // 
-    // it should display the days available from the current range within the weeks
 
     function compileDirective(){
         compiledElem = _$compile( directiveElem.get(0) )(currentScope);

@@ -15,7 +15,7 @@ angular.module('Calendar')
             ];
         function getShortDay(dateOb) { return dateOb.toDateString().split(" ")[0]; }
         function makeRows(daysArray) {
-            var rows = [], week = [], month;
+            var rows = [], week = [], month, rem;
             angular.forEach(daysArray, function(day, i) {
                 month = day.date.getMonth();
                 week.push({
@@ -26,6 +26,7 @@ angular.module('Calendar')
                 });
                 if ( (i+1) % DAYS.length === 0 ) { rows.push(week); week = []; }
             });
+            if ( week.length ) rows.push(week); // march is sometimes missing a day
             return rows;
         }
         return {

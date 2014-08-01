@@ -44,10 +44,10 @@ angular.module('Calendar')
 				}
 
 				endDay.setTime(endDay.getTime() - DAY);
-
 				lastDay = new Date(endDay);
+				// this may not work using current time if you use it late at night
 				lastDay.setTime(
-					lastDay.getTime() + ( 6 - endDay.getDay() ) * DAY
+					(lastDay.getTime() + ( 6 - endDay.getDay() ) * DAY)+(DAY/2)
 				);
 
 				firstDate = new Date(firstDay);
